@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/c7ec8188f8.js" crossorigin="anonymous"></script>
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        #div {
+            position: relative;
+            height: 100vh;
+            width: 100vw;
+            background-image: url("https://media.istockphoto.com/id/824845572/photo/thermometer-sun-high-degres-hot-summer-day-high-summer-temperatures.webp?b=1&s=170667a&w=0&k=20&c=8ijy1ixq0ALEpJIt9D4ElKJzayexgzXTDG2ZRCYVfHQ=");
+            background-size: 100% 100%;
+        }
+
+        input {
+            position: absolute;
+            top: 40%;
+            left: 40%;
+            height: 5%;
+            width: 17%;
+            border-radius: 10px;
+            border: none;
+            color: gray;
+            text-align: center;
+
+            font-size: 19px;
+            box-sizing: border-box;
+            box-shadow: 0px 0px 10px 1px rgb(155, 176, 235);
+        }
+
+        .cloud {
+            position: absolute;
+            top: 15%;
+            left: 44%;
+            font-size: 80px;
+            color: white;
+        }
+
+        #wea {
+            position: absolute;
+            top: 27%;
+            left: 36%;
+            font-size: 50px;
+            color: white;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            font-weight: 100;
+        }
+
+        #pressure {
+            position: absolute;
+            top: 64%;
+            left: 32%;
+            font-size: 30px;
+            text-align: center;
+            color: white;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            font-weight: 100;
+        }
+
+        #humidity {
+            position: absolute;
+            top: 64%;
+            left: 58%;
+            font-size: 30px;
+            text-align: center;
+            color: white;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            font-weight: 100;
+        }
+
+        #dating {
+            position: absolute;
+            top: 59%;
+            left: 43.5%;
+            font-weight: 100;
+
+            font-size: 27px;
+            color: white;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            text-align: center;
+        }
+
+        #heading {
+            position: absolute;
+            top: 65%;
+            left: 42.5%;
+            font-weight: 100;
+
+            font-size: 23px;
+            color: white;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            text-align: center;
+        }
+
+        #cit {
+            position: absolute;
+            top: 53%;
+            left: 45%;
+            font-size: 30px;
+            color: white;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            text-align: center;
+        }
+
+        input:focus {
+            outline: none;
+            box-shadow: inset 0px 0px 5px 5px rgb(19, 148, 187);
+        }
+
+        ::placeholder {
+            padding-left: 0px;
+            color: gray
+        }
+
+        #submit {
+            position: absolute;
+            top: 47%;
+            height: 4.5%;
+            width: 8%;
+            border: none;
+            background-color: white;
+            border-radius: 10px;
+            left: 44.5%;
+            font-size: 17px;
+            color: gray;
+            transition: 1s;
+        }
+
+        #submit:hover {
+            cursor: pointer;
+            box-shadow: inset 0px 0px 5px 5px rgb(19, 148, 187);
+            transition: 1s;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="div">
+        <h2 id="wea">Weather Api's</h2>
+        <h1 id="cit"></h1>
+        <i class="fa-solid fa-cloud-sun cloud"></i> <input type="text" placeholder="Enter City:">
+        <button id="submit" onclick="display()">Submit</button>
+        <h1 id="heading"></h1>
+        <h2 id="pressure"></h2>
+        <h2 id="dating"></h2>
+        <h2 id="humidity"></h2>
+    </div>
+    <script>
+        const key = "e2de8f9144b2d73d5a883fe97bf9f303";
+        let heading = document.getElementById("heading")
+        let date = document.getElementById("dating")
+        let div2 = document.getElementById("div")
+
+        let press = document.getElementById("pressure")
+        let humid = document.getElementById("humidity")
+
+
+
+        let display = () => {
+            let input = document.querySelector("input")
+            let city = input.value
+            let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=e2de8f9144b2d73d5a883fe97bf9f303&units=metric`
+            fetch(url)
+                .then((res) => {
+                    res.json().then((data => {
+                        console.log("data", data);
+                        heading.innerText = `Temperature \n ${parseInt(data.main.temp)}°C|°F`
+                        cit.innerText = `${city}`
+                        press.innerText = `Pressure \n ${parseInt(data.main.pressure)}Pas`
+                        humid.innerText = `Humidity \n ${parseInt(data.main.humidity)}Mois`
+
+
+                        console.log(data.weather[0].main)
+                        switch (data.weather[0].main) {
+                            case "clouds":
+                                div2.style.backgroundImage = "url('https://tse4.mm.bing.net/th?id=OIP.kkXjS8PKda1nAGSpf60B0wHaEK&pid=Api&P=0&h=220')"
+                                break;
+                            case "Dust":
+                                div2.style.backgroundImage = "url('https://tse4.mm.bing.net/th?id=OIP.W7p8XN4EshisPH6PYMZt2gHaE0&pid=Api&P=0&h=220')"
+                                break;
+                            case "Clear":
+                                div2.style.backgroundImage = "url('https://tse1.mm.bing.net/th?id=OIP.s0m3vIPumPI5-7esMnJk9wHaED&pid=Api&P=0&h=220')"
+                                break;
+                                case "Haze":
+                                div2.style.backgroundImage = "url('https://tse1.mm.bing.net/th?id=OIP.78Y93flNY620OOdAars8mwHaE8&pid=Api&P=0&h=220')"
+                                break;
+                                case "Rainy":
+                                div2.style.backgroundImage = "url('https://tse3.mm.bing.net/th?id=OIP.D6yRbyIRedvrD4qvU_QO1gHaFj&pid=Api&P=0&h=220')"
+
+                        }
+                        let dat = () => {
+                            var d = new Date();
+                            date.innerText = `${d.getMonth()+1}:${d.getDate()}:${d.getFullYear()}`
+
+                        }
+                        setInterval(dat, 1000)
+                    }))
+                })
+        }
+
+
+
+    </script>
+</body>
+
+</html>
